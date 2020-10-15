@@ -5,6 +5,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 // сборка html
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { Template } = require("webpack");
+const { VueLoaderPlugin } = require("vue-loader");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
+
 // в webpack require module.exports = {} это экспорт
 module.exports = {
   // для сборки файлов js в опред место. bundle `связка` станд назв для собран js файлам
@@ -16,12 +19,16 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        loader: "vue-loader",
       },
       {
         // для работы файла loader
         test: /\.(png|jpe?g|svg|gif)$/i,
         use: { loader: "file-loader" },
+      },
+      {
+        test: /\.vue$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -40,6 +47,9 @@ module.exports = {
       patterns: [{ from: "./src/assets/imgs", to: "img" }],
     }),
     // объявляем то что подключили выше. можем не указывать на index.html так как одноименно
-    new HtmlWebpackPlugin({ template: "./public/index.html" }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+    new VueLoaderPlugin(),
   ],
 };

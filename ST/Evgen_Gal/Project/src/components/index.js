@@ -75,5 +75,13 @@ export default () => {
         this.basketItems = basket.content;
       });
     },
+    computed: {
+      total() {
+        //   let sum = this.basketItems.reduce(
+        //     (sum, item) => sum + item.productPrice * item.amount
+        //   );
+        //   return sum ? sum : 1500;
+      },
+    },
   });
 };
